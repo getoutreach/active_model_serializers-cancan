@@ -50,7 +50,8 @@ end
 
 #### RESTful Alias
 
-If `:restful` is passed as an ability it will expand to the 7 default RESTful actions: `:index, :show, :new, :create, :edit, :update, :delete`
+If `:restful` is passed as an ability it will expand to the 7 default
+RESTful actions: `:index, :show, :new, :create, :edit, :update, :destroy`
 
 #### Overriding an Ability
 

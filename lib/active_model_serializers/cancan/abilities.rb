@@ -26,7 +26,7 @@ module ActiveModel
           def expand_cancan_actions(actions)
             if actions.include? :restful
               actions.delete :restful
-              actions |= [:index, :show, :new, :create, :edit, :update, :delete]
+              actions |= [:index, :show, :new, :create, :edit, :update, :destroy]
             end
             actions
           end
