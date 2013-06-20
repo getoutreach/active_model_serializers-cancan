@@ -1,19 +1,16 @@
 module ActiveModel
   class Serializer
-    module Associations #:nodoc:
-      class Config #:nodoc:
+    class Association #:nodoc:
 
-        def authorize?
-          !!option(:authorize)
-        end
-
+      def authorize?
+        !!options[:authorize]
       end
 
       class HasMany #:nodoc:
 
         def serialize_with_cancan
           return serialize_without_cancan unless authorize?
-          associated_object.select{|o| source_serializer.can?(:read, o)}.map do |item|
+          object.select {|item| find_serializable(item).can?(:read, item) }.map do |item|
             find_serializable(item).serializable_hash
           end
         end
@@ -24,7 +21,8 @@ module ActiveModel
       class HasOne #:nodoc:
 
         def serialize_with_cancan
-          return nil unless !authorize? || source_serializer.can?(:read, associated_object)
+          serializer = find_serializable(object)
+          return nil unless !authorize? || serializer.can?(:read, object)
           serialize_without_cancan
         end
         alias_method_chain :serialize, :cancan

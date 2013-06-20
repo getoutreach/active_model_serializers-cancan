@@ -11,17 +11,20 @@ class SuperModel::Base
 end
 
 class User < SuperModel::Base
+  include ActiveModel::SerializerSupport
   has_many :projects
   has_many :categories
 end
 
 class Project < SuperModel::Base
+  include ActiveModel::SerializerSupport
   belongs_to :user
   belongs_to :category
   has_many :categories
 end
 
 class Category < SuperModel::Base
+  include ActiveModel::SerializerSupport
   belongs_to :user
   belongs_to :project
   has_many :projects

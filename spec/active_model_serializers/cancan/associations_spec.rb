@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ActiveModel::Serializer::Associations do
+describe ActiveModel::Serializer::Association do
 
   let(:user) { User.find(1) }
 
@@ -61,7 +61,7 @@ describe ActiveModel::Serializer::Associations do
       end
     end
 
-    it 'should filter unauthorized records' do
+    it 'should filter unauthorized records', focus: true do
       expect(CategorySerializer.new(category, scope: user).serializable_hash[:projects].length).to eq(1)
     end
 
