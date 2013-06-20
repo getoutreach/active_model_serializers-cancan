@@ -22,7 +22,7 @@ module ActiveModel
 
         def serialize_with_cancan
           serializer = find_serializable(object)
-          return nil unless !authorize? || serializer.can?(:read, object)
+          return nil unless !authorize? || serializer && serializer.can?(:read, object)
           serialize_without_cancan
         end
         alias_method_chain :serialize, :cancan
