@@ -10,7 +10,7 @@ module ActiveModel
           current_ability.can? *args
         end
 
-        def cannot?
+        def cannot?(*args)
           current_ability.cannot? *args
         end
       end

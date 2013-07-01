@@ -16,7 +16,7 @@ describe ActiveModel::Serializer::CanCan::Abilities do
     let(:serializer) do
       Class.new(ActiveModel::Serializer) do
         attributes :id
-        abilities :restful, :foo
+        abilities :restful, :foo, :bar
         def current_ability
           MockAbility.new(nil)
         end
@@ -24,6 +24,10 @@ describe ActiveModel::Serializer::CanCan::Abilities do
         def can_foo?
           true
         end
+
+        def can_bar?
+          cannot? :read, Category
+        end        
       end
     end
 
@@ -40,6 +44,7 @@ describe ActiveModel::Serializer::CanCan::Abilities do
       its([:update]) { should be_true }
       its([:show]) { should be_false }
       its([:foo]) { should be_true }
+      its([:bar]) { should be_true }
     end
   end
 end
