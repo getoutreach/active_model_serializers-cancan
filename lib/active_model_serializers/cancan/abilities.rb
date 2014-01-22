@@ -19,7 +19,7 @@ module ActiveModel
                 end
               end
             end
-            attributes :abilities
+            attributes :can
           end
 
           private
@@ -32,7 +32,7 @@ module ActiveModel
           end
         end
 
-        def abilities
+        def can
           cancan_actions.inject({}) do |hash, action|
             hash[action] = send("can_#{action}?")
             hash
