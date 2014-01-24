@@ -1,6 +1,6 @@
 module ActiveModel
   class Serializer
-    class Association #:nodoc:
+    module Associations #:nodoc:
 
       def authorize?
         !!options[:authorize]
