@@ -31,11 +31,11 @@ describe ActiveModel::Serializer::CanCan::Abilities do
 
     context 'serializable_hash' do
       subject { category_serializer.serializable_hash }
-      its(:keys) { should eq [:id, :abilities] }
+      its(:keys) { should eq [:id, :can] }
     end
 
     context 'abilities key' do
-      subject { category_serializer.serializable_hash[:abilities] }
+      subject { category_serializer.serializable_hash[:can] }
       its([:restful]) { should be_nil }
       its([:update]) { should be_true }
       its([:show]) { should be_false }

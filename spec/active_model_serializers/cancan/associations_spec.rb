@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ActiveModel::Serializer::Association do
+describe ActiveModel::Serializer::Associations do
 
   let(:user) { User.find(1) }
 
@@ -9,6 +9,10 @@ describe ActiveModel::Serializer::Association do
   context 'when authorize is set to false' do
 
     before do
+      Object.send(:remove_const, :CategorySerializer) if defined?(CategorySerializer)
+      Object.send(:remove_const, :ProjectSerializer) if defined?(ProjectSerializer)
+      Object.send(:remove_const, :Ability) if defined?(Ability)
+
       CategorySerializer = Class.new(ActiveModel::Serializer) do
         attributes :id
         has_many :projects, authorize: false
@@ -40,6 +44,10 @@ describe ActiveModel::Serializer::Association do
   context 'when authorize set to true' do
 
     before do
+      Object.send(:remove_const, :CategorySerializer) if defined?(CategorySerializer)
+      Object.send(:remove_const, :ProjectSerializer) if defined?(ProjectSerializer)
+      Object.send(:remove_const, :Ability) if defined?(Ability)
+
       CategorySerializer = Class.new(ActiveModel::Serializer) do
         attributes :id
         has_many :projects, authorize: true
@@ -54,8 +62,8 @@ describe ActiveModel::Serializer::Association do
         include CanCan::Ability
         def initialize(user)
           can :read, Category
-          can :read, Project do |p|
-            p.user == user
+          can :read, Project do |pr|
+            pr.user == user
           end
         end
       end

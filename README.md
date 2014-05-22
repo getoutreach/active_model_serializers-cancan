@@ -1,12 +1,12 @@
 # ActiveModelSerializers::Cancan
 
-Provides a simple integration between [CanCan](https://github.com/ryanb/cancan) and [Active Model Serializers](https://github.com/josevalim/active_model_serializers).
+Provides a simple integration between [CanCanCan](https://github.com/CanCanCommunity/cancancan) and [Active Model Serializers](https://github.com/rails-api/active_model_serializers).
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'active_model_serializers-cancan'
+    gem 'active_model_serializers_cancancan'
 
 And then execute:
 
@@ -14,7 +14,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install active_model_serializers-cancan
+    $ gem install active_model_serializers_cancancan
 
 ## Usage
 
