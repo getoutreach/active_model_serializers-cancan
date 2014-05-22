@@ -2,7 +2,7 @@
 class ActiveModel::Serializer
   def include_associations!
     _associations.each_pair do |name, asst|
-      include!(name, asst.options) if include?(name)
+      include!(name, asst.options.dup) if include?(name)
     end
   end
 end

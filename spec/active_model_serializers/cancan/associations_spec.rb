@@ -6,8 +6,40 @@ describe ActiveModel::Serializer::Associations do
 
   let(:category) { Category.first }
 
-  context 'when authorize is set to false' do
+  context 'when authorize is not set' do
+    before do
+      Object.send(:remove_const, :CategorySerializer) if defined?(CategorySerializer)
+      Object.send(:remove_const, :ProjectSerializer) if defined?(ProjectSerializer)
+      Object.send(:remove_const, :Ability) if defined?(Ability)
 
+      CategorySerializer = Class.new(ActiveModel::Serializer) do
+        attributes :id
+        has_many :projects
+        has_one :project
+      end
+
+      ProjectSerializer = Class.new(ActiveModel::Serializer) do
+        attributes :id
+      end
+
+      Ability = Class.new do
+        include CanCan::Ability
+        def initialize(user)
+          cannot :read, :project
+        end
+      end
+    end
+
+    it 'should serialize forbidden has_many records' do
+      expect(CategorySerializer.new(category, scope: user).serializable_hash[:projects].length).to eq(2)
+    end
+
+    it 'should serialize forbidden has_one records' do
+      expect(CategorySerializer.new(category, scope: user).serializable_hash[:project]).to_not be_nil
+    end
+  end
+
+  context 'when authorize is set to false' do
     before do
       Object.send(:remove_const, :CategorySerializer) if defined?(CategorySerializer)
       Object.send(:remove_const, :ProjectSerializer) if defined?(ProjectSerializer)
@@ -37,12 +69,11 @@ describe ActiveModel::Serializer::Associations do
 
     it 'should serialize forbidden has_one records' do
       expect(CategorySerializer.new(category, scope: user).serializable_hash[:project]).to_not be_nil
+      expect(CategorySerializer.new(category, scope: user).serializable_hash[:project]).to_not be_nil
     end
-
   end
 
   context 'when authorize set to true' do
-
     before do
       Object.send(:remove_const, :CategorySerializer) if defined?(CategorySerializer)
       Object.send(:remove_const, :ProjectSerializer) if defined?(ProjectSerializer)
@@ -80,7 +111,6 @@ describe ActiveModel::Serializer::Associations do
     it 'should serialize authorized has_one records' do
       expect(CategorySerializer.new(category, scope: User.find(2)).serializable_hash[:project]).to_not be_nil
     end
-
   end
 
 end
