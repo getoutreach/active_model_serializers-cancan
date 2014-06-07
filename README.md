@@ -1,4 +1,4 @@
-# ActiveModelSerializers::Cancan
+# ActiveModelSerializers::Cancancan
 
 Provides a simple integration between [CanCanCan](https://github.com/CanCanCommunity/cancancan) and [Active Model Serializers](https://github.com/rails-api/active_model_serializers).
 
