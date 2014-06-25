@@ -1,5 +1,6 @@
-require 'cancan'
+require 'cancancan'
 require 'active_model_serializers'
+require 'active_model_serializers/cancan/monkeypatch'
 require 'active_model_serializers/cancan/version'
 require 'active_model_serializers/cancan/helpers'
 require 'active_model_serializers/cancan/associations'

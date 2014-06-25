@@ -8,6 +8,13 @@ module ActiveModel
           class_attribute :cancan_actions
         end
 
+        def can
+          cancan_actions.inject({}) do |hash, action|
+            hash[action] = send("can_#{action}?")
+            hash
+          end
+        end
+
         module ClassMethods
           def abilities(*actions)
             self.cancan_actions = expand_cancan_actions(actions)
@@ -19,7 +26,7 @@ module ActiveModel
                 end
               end
             end
-            attributes :abilities
+            attributes :can
           end
 
           private
@@ -32,15 +39,10 @@ module ActiveModel
           end
         end
 
-        def abilities
-          cancan_actions.inject({}) do |hash, action|
-            hash[action] = send("can_#{action}?")
-            hash
-          end
-        end
       end
     end
   end
 end
 
 ActiveModel::Serializer.send :include, ActiveModel::Serializer::CanCan::Abilities
+

@@ -2,29 +2,29 @@ require 'bundler'
 
 Bundler.require(:default, :test)
 
-class SuperModel::Base
+require 'mongoid'
+require 'active_model_serializers_cancancan'
 
-  def read_attribute_for_serialization(n)
-    attributes[n]
-  end
-
+Mongoid.configure do |config|
+  config.connect_to "ams-test"
 end
 
-class User < SuperModel::Base
-  include ActiveModel::SerializerSupport
+class User
+  include Mongoid::Document
+  field :name
   has_many :projects
   has_many :categories
 end
 
-class Project < SuperModel::Base
-  include ActiveModel::SerializerSupport
+class Project
+  include Mongoid::Document
   belongs_to :user
   belongs_to :category
   has_many :categories
 end
 
-class Category < SuperModel::Base
-  include ActiveModel::SerializerSupport
+class Category
+  include Mongoid::Document
   belongs_to :user
   belongs_to :project
   has_many :projects
